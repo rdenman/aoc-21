@@ -23,15 +23,14 @@ func ReadAndSplitInputData(filename string, split_on ...string) ([]string, error
 }
 
 func StringArrayToIntArray(data []string) ([]int, error) {
-	var ints []int
-
-	for _, s := range data {
-		i, err := strconv.Atoi(s)
+	ints := make([]int, len(data))
+	for i, s := range data {
+		num, err := strconv.Atoi(s)
 		if err != nil {
 			return nil, err
 		}
 
-		ints = append(ints, i)
+		ints[i] = num
 	}
 
 	return ints, nil
