@@ -45,7 +45,7 @@ func solution2() int {
 }
 
 func readInputData() []int {
-	input, err := os.ReadFile("./input")
+	input, err := os.ReadFile("./input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
