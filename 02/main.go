@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"strconv"
 	"strings"
+
+	"github.com/rdenman/aoc-21/util"
 )
 
 type command struct {
@@ -59,19 +59,14 @@ func solution2() int {
 }
 
 func readInputData() []command {
-	input, err := os.ReadFile("./input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	rows, err := util.ReadAndSplitInputData("./input.txt")
+	util.CheckError(err)
 
-	rows := strings.Split(string(input), "\n")
 	data := make([]command, len(rows))
 	for i, r := range rows {
 		kv := strings.Split(r, " ")
 		num, err := strconv.Atoi(kv[1])
-		if err != nil {
-			log.Fatal(err)
-		}
+		util.CheckError(err)
 
 		data[i] = command{kv[0], num}
 	}

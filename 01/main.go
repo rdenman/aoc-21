@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"strings"
 
 	"github.com/rdenman/aoc-21/util"
 )
@@ -45,15 +42,10 @@ func solution2() int {
 }
 
 func readInputData() []int {
-	input, err := os.ReadFile("./input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	data, err := util.ReadAndSplitInputData("./input.txt")
+	util.CheckError(err)
 
-	data := strings.Split(string(input), "\n")
 	ints, err := util.StringArrayToIntArray(data)
-	if err != nil {
-		log.Fatal(err)
-	}
+	util.CheckError(err)
 	return ints
 }
