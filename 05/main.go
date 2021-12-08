@@ -87,11 +87,11 @@ func solution2() int {
 				board[l.p1.y][i]++
 			}
 		} else {
-			run := (l.p2.x - l.p1.x) / int(math.Abs(float64(l.p2.x - l.p1.x)))
-			rise := (l.p2.y - l.p1.y) / int(math.Abs(float64(l.p2.y - l.p1.y)))
-			for x, y := l.p1.x, l.p1.y; x != l.p2.x + run && y != l.p2.y + rise; x, y = x + run, y + rise {
+			run := (l.p2.x - l.p1.x) / int(math.Abs(float64(l.p2.x-l.p1.x)))
+			rise := (l.p2.y - l.p1.y) / int(math.Abs(float64(l.p2.y-l.p1.y)))
+			for x, y := l.p1.x, l.p1.y; x != l.p2.x+run && y != l.p2.y+rise; x, y = x+run, y+rise {
 				board[y][x]++
-			}	
+			}
 		}
 	}
 
@@ -156,10 +156,10 @@ func updateMax(l line) {
 }
 
 func makeBoard() [][]int {
-	board := make([][]int, maxY + 1)
+	board := make([][]int, maxY+1)
 
 	for i := range board {
-		board[i] = make([]int, maxX + 1)
+		board[i] = make([]int, maxX+1)
 	}
 
 	return board

@@ -23,7 +23,7 @@ func main() {
 
 func solution1() int {
 	data := readInputData()
-	
+
 	hor, dep := 0, 0
 	for _, c := range data {
 		switch c.dir {

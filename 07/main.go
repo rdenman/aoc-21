@@ -18,8 +18,8 @@ func main() {
 func solution1() int {
 	data := readInputData()
 	sort.Ints(data)
-	
-	med := data[len(data) / 2]
+
+	med := data[len(data)/2]
 
 	return calcCost(data, med)
 }
@@ -35,15 +35,15 @@ func solution2() int {
 	mean := sum / len(data)
 	cost := calcCostMult(data, mean)
 	for i := 1; ; i++ {
-		aCost := calcCostMult(data, mean + i)
-		bCost := calcCostMult(data, mean - i)
+		aCost := calcCostMult(data, mean+i)
+		bCost := calcCostMult(data, mean-i)
 
 		changed := false
-		if (aCost < cost) {
+		if aCost < cost {
 			cost = aCost
 			changed = true
 		}
-		if (bCost < cost) {
+		if bCost < cost {
 			cost = bCost
 			changed = true
 		}

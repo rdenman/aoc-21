@@ -9,8 +9,8 @@ import (
 )
 
 type entry struct {
-	input []string
-	output  []string
+	input  []string
+	output []string
 }
 
 func main() {
@@ -78,7 +78,7 @@ func sumOutput(input, output []string) int {
 	}
 
 	one := lenMap[2][0]
-	four := lenMap[4][0]	
+	four := lenMap[4][0]
 
 	var nine string
 	for _, sixLettered := range lenMap[6] {
@@ -93,7 +93,7 @@ func sumOutput(input, output []string) int {
 	}
 
 	for _, fiveLettered := range lenMap[5] {
-		if len(removeFromString(fiveLettered, one)) == 3 { 
+		if len(removeFromString(fiveLettered, one)) == 3 {
 			solution[fiveLettered] = 3
 		} else if len(removeFromString(fiveLettered, nine)) == 0 {
 			solution[fiveLettered] = 5
@@ -105,11 +105,11 @@ func sumOutput(input, output []string) int {
 	count := 0
 	for i, out := range output {
 		if _, ok := solution[out]; ok {
-			count += solution[out] * int(math.Pow(10, float64(3 - i)))
+			count += solution[out] * int(math.Pow(10, float64(3-i)))
 			continue
 		}
 
-		L:
+	L:
 		for _, poss := range lenMap[len(out)] {
 			for _, char := range poss {
 				if !strings.ContainsRune(out, char) {
@@ -117,7 +117,7 @@ func sumOutput(input, output []string) int {
 				}
 			}
 
-			count += solution[poss] * int(math.Pow(10, float64(3 - i)))
+			count += solution[poss] * int(math.Pow(10, float64(3-i)))
 			break
 		}
 	}

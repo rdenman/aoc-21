@@ -29,7 +29,7 @@ func solution1() int {
 			if won {
 				winner = b
 				lastNum = num
-				break;
+				break
 			}
 		}
 		if won {
@@ -102,7 +102,7 @@ func checkBoard(b board, n int) bool {
 			break
 		}
 	}
-	
+
 	return isWinner(b)
 }
 
@@ -138,7 +138,7 @@ func readInputData() ([]int, []board) {
 	util.CheckError(err)
 
 	var boards []board
-	for i:= 1; i < len(data); i++ {
+	for i := 1; i < len(data); i++ {
 		if data[i] != "" {
 			b := make(board, 5)
 			for j := 0; j < 5; j++ {

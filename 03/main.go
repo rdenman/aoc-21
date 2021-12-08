@@ -38,7 +38,6 @@ func solution1() int {
 		}
 	}
 
-
 	g, err := strconv.ParseInt(gam, 2, 64)
 	util.CheckError(err)
 	e, err := strconv.ParseInt(eps, 2, 64)
