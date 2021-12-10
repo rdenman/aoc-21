@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/rdenman/aoc-21/util"
@@ -42,14 +43,20 @@ func solution2() int {
 		for j, v := range row {
 			if isLowPoint(data, v, i, j) {
 				p := point{i, j}
-				lows[p] = getBasinSize(data, p, []point{p})
+				lows[p] = getBasinSize(data, p, map[point]bool{p: true})
 			}
 		}
 	}
 
-	fmt.Println(lows)
+	set := []int{}
+	for _, c := range lows {
+		set = append(set, c)
+	}
 
-	return 1
+	sort.Ints(set)
+
+	count := len(set)
+	return set[count-1] * set[count-2] * set[count-3]
 }
 
 func readInputData() [][]int {
@@ -66,50 +73,60 @@ func readInputData() [][]int {
 }
 
 func isLowPoint(data [][]int, value, i, j int) bool {
+	up, down, left, right := getAdjacentIndicies(len(data), len(data[i]), i, j)
+
+	return (up == -1 || value < data[up][j]) &&
+		(down == -1 || value < data[down][j]) &&
+		(left == -1 || value < data[i][left]) &&
+		(right == -1 || value < data[i][right])
+}
+
+func getBasinSize(data [][]int, p point, visited map[point]bool) int {
+	up, down, left, right := getAdjacentIndicies(len(data), len(data[p.I]), p.I, p.J)
+	adj := []point{}
+
+	if up != -1 && data[up][p.J] != 9 && !visited[point{up, p.J}] {
+		adj = append(adj, point{up, p.J})
+		visited[point{up, p.J}] = true
+	}
+
+	if down != -1 && data[down][p.J] != 9 && !visited[point{down, p.J}] {
+		adj = append(adj, point{down, p.J})
+		visited[point{down, p.J}] = true
+	}
+
+	if left != -1 && data[p.I][left] != 9 && !visited[point{p.I, left}] {
+		adj = append(adj, point{p.I, left})
+		visited[point{p.I, left}] = true
+	}
+
+	if right != -1 && data[p.I][right] != 9 && !visited[point{p.I, right}] {
+		adj = append(adj, point{p.I, right})
+		visited[point{p.I, right}] = true
+	}
+
+	for _, a := range adj {
+		getBasinSize(data, a, visited)
+	}
+
+	return len(visited)
+}
+
+func getAdjacentIndicies(iLen, jLen, i, j int) (int, int, int, int) {
 	up, down, left, right := -1, -1, -1, -1
 	if i > 0 {
 		up = i - 1
 	}
-	if i < len(data) - 1 {
+	if i < iLen-1 {
 		down = i + 1
 	}
 	if j > 0 {
 		left = j - 1
 	}
-	if j < len(data[i]) - 1 {
+	if j < jLen-1 {
 		right = j + 1
 	}
-
-	return (up == -1 || value < data[up][j]) &&
-		(down == -1 || value < data[down][j]) &&
-		(left == -1 || value < data[i][left]) && 
-		(right == -1 || value < data[i][right])
-}
-
-func getBasinSize(data [][]int, p point, visited []point) int {
-	size := 0
-
-	if p.I > 0 && data[p.I - 1][p.J] < 9 && !hasVisited(visited, point{p.I - 1, p.J}) {
-		visited = append(visited, point{p.I - 1, p.J})
-		size += 1 + getBasinSize(data, point{p.I - 1, p.J}, visited)
-	}
-
-	if p.I < len(data) - 1 && data[p.I + 1][p.J] < 9 && !hasVisited(visited, point{p.I + 1, p.J}) {
-		visited = append(visited, point{p.I + 1, p.J})
-		size += 1 + getBasinSize(data, point{p.I + 1, p.J}, visited)
-	}
-
-	if p.J > 0 && data[p.I][p.J - 1] < 9 && !hasVisited(visited, point{p.I, p.J - 1}) {
-		visited = append(visited, point{p.I, p.J - 1})
-		size += 1 + getBasinSize(data, point{p.I, p.J - 1}, visited)
-	}
-
-	if p.J < len(data[p.I]) - 1 && data[p.I][p.J + 1] < 9 && !hasVisited(visited, point{p.I, p.J + 1}) {
-		visited = append(visited, point{p.I, p.J + 1})
-		size += 1 + getBasinSize(data, point{p.I, p.J + 1}, visited)
-	}
-
-	return size
+	return up, down, left, right
 }
 
 func hasVisited(li []point, p point) bool {
