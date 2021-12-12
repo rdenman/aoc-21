@@ -23,9 +23,7 @@ func solution1() int {
 }
 
 func solution2() int {
-	data := readInputData()
-
-	fmt.Println(data)
+	readInputData()
 
 	return 1
 }
